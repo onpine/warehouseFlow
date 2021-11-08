@@ -1,0 +1,20 @@
+{
+  "extends": ["taro/react"],
+  "plugins": ["prettier"],
+  "rules": {
+    // "prettier/prettier": [
+    //   "warn",
+    //   {
+    //     "semi": true,
+    //     "trailingComma": "all",
+    //     "singleQuote": true,
+    //     "printWidth": 90,
+    //     "tabWidth": 2,
+    //     "jsxBracketSameLine": true,
+    //     "endOfLine": "auto"
+    //   }
+    // ],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
+  }
+}

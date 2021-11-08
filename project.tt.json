@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "warehouseFlow",
+  "appid": "touristappid",
+  "setting": {
+    "es6": false,
+    "minified": false
+  }
+}
