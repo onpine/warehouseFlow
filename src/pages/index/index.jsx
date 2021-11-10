@@ -15,6 +15,7 @@ export default class Index extends Component {
       sex: "",
       company: "",
       standardLoad: undefined,
+      goodsName: "",
 
       startTime: new Date().format("yyyy-MM-dd"),
       endTime: new Date().format("yyyy-MM-dd"),
@@ -66,6 +67,26 @@ export default class Index extends Component {
           <View>
             <Text className="title">基本信息</Text>
             <AtInput
+              name="licensePlate"
+              title="车牌号"
+              type="text"
+              placeholder="车牌号"
+              required
+              border={false}
+              value={this.state.licensePlate}
+              onChange={this.handleChange.bind(this, "licensePlate")}
+            />
+            <AtInput
+              name="goodsName"
+              title="货物名"
+              type="text"
+              placeholder="货物名"
+              required
+              border={false}
+              value={this.state.goodsName}
+              onChange={this.handleChange.bind(this, "goodsName")}
+            />
+            <AtInput
               name="driverName"
               title="姓名"
               type="text"
@@ -85,16 +106,6 @@ export default class Index extends Component {
               border={false}
               value={this.state.phone}
               onChange={this.handleChange.bind(this, "phone")}
-            />
-            <AtInput
-              name="licensePlate"
-              title="车牌号"
-              type="text"
-              placeholder="车牌号"
-              required
-              border={false}
-              value={this.state.licensePlate}
-              onChange={this.handleChange.bind(this, "licensePlate")}
             />
             <AtInput
               name="company"
