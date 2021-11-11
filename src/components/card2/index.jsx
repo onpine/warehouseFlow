@@ -6,10 +6,11 @@ import "./index.less";
 import { AtIcon, AtAccordion } from "taro-ui";
 
 export default class Card2 extends Component {
-  constructor() {
+  constructor(props) {
     super(...arguments);
     this.state = {
       open: false,
+      ...props.data,
     };
   }
   componentWillMount() {}
@@ -32,31 +33,31 @@ export default class Card2 extends Component {
     return (
       <View className="card2">
         <View className="header">
-          <View className="left">2021.11.09</View>
+          <View className="left">{this.props.data?.opendts}</View>
           <AtIcon value="arrow-right" size="30" color="#fff"></AtIcon>
-          <View className="right">2021.11.09</View>
+          <View className="right">{this.props.data?.opendte}</View>
         </View>
         <AtAccordion
           open={this.state.open}
           onClick={this.handleClick.bind(this)}
-          title="豫A·07070"
+          title={this.props.data?.cid}
         >
           <View className="content">
             <View className="row">
               <Text className="title">司机姓名</Text>
-              <Text className="text">大壮</Text>
+              <Text className="text">{this.props.data?.name}</Text>
             </View>
             <View className="row">
               <Text className="title">手机号</Text>
-              <Text className="text">15899990000</Text>
+              <Text className="text">{this.props.data?.phone}</Text>
             </View>
             <View className="row">
               <Text className="title">公司</Text>
-              <Text className="text">大壮农鲜运输有限公司</Text>
+              <Text className="text">{this.props.data?.company}</Text>
             </View>
             <View className="row">
               <Text className="title">车辆标载</Text>
-              <Text className="text">50吨</Text>
+              <Text className="text">{this.props.data?.standardLoad} 吨</Text>
             </View>
           </View>
         </AtAccordion>

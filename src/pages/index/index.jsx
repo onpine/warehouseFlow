@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, Picker } from "@tarojs/components";
+import { View, Text, Picker, Button } from "@tarojs/components";
 import "./index.less";
 
 import { AtForm, AtInput, AtButton, AtList, AtListItem } from "taro-ui";
@@ -55,6 +55,9 @@ export default class Index extends Component {
       value: "",
     });
   }
+  // getPhoneNumber(e) {
+  //   console.log(e.detail);
+  // }
 
   render() {
     return (
@@ -171,6 +174,12 @@ export default class Index extends Component {
               重置
             </AtButton>
           </View>
+          {/* <Button
+            openType="getPhoneNumber"
+            onGetPhoneNumber={this.getPhoneNumber.bind(this)}
+          >
+            获取手机号
+          </Button> */}
         </AtForm>
       </View>
     );
