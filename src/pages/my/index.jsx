@@ -63,7 +63,7 @@ export default class My extends Component {
   render() {
     return (
       <View className="my">
-        <View className="tabs">
+        <View className="my_tabs">
           <AtTabs
             current={this.state.current}
             scroll
@@ -82,7 +82,7 @@ export default class My extends Component {
          */}
           </AtTabs>
         </View>
-        <View className="content">
+        <View className="my_content">
           <View>
             <Text className="box-title">当前有效通行证</Text>
             {this.state.effective.map((item, index) => {

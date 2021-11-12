@@ -25,12 +25,12 @@ export default class Card extends Component {
   render() {
     return (
       <View className="card">
-        <View className="header">
+        <View className="card_header">
           <View className="left">{this.props.data?.opendts}</View>
           <AtIcon value="arrow-right" size="30" color="#fff"></AtIcon>
           <View className="right">{this.props.data?.opendte}</View>
         </View>
-        <View className="content">
+        <View className="card_content">
           <View className="row">
             <Text className="title">车牌号</Text>
             <Text className="text">{this.props.data?.cid}</Text>
