@@ -5,21 +5,30 @@ import "./index.less";
 
 import { AtForm, AtInput, AtButton, AtList, AtListItem } from "taro-ui";
 
+import { addPermit } from "../../services/index";
+
 export default class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      driverName: "",
-      licensePlate: "",
-      phone: "",
+      driverName: "马*德",
+      licensePlate: "豫A-00111",
+      phone: "13200001212",
       sex: "",
-      company: "",
-      standardLoad: undefined,
-      goodsName: "",
+      company: "河东运输",
+      standardLoad: 25,
+      goodsName: "小麦",
 
-      startTime: new Date().format("yyyy-MM-dd"),
-      endTime: new Date().format("yyyy-MM-dd"),
+      // startTime: new Date().format("yyyy-MM-dd"),
+      startTime: new Date(new Date().setDate(new Date().getDate() - 3)).format(
+        "yyyy-MM-dd"
+      ),
+      endTime: new Date(new Date().setDate(new Date().getDate() - 2)).format(
+        "yyyy-MM-dd"
+      ),
     };
+
+    this.addPermit.bind(this);
   }
 
   componentWillMount() {
@@ -47,12 +56,66 @@ export default class Index extends Component {
       [key]: event.detail.value,
     });
   };
-  onSubmit(event) {
-    console.log(this.state);
+  async addPermit(wid) {
+    try {
+      Taro.showLoading({
+        title: "加载中",
+        mask: true,
+      });
+      const { data } = await addPermit({
+        wid,
+        cid: this.state.licensePlate,
+        name: this.state.driverName,
+        phone: this.state.phone,
+        standardLoad: this.state.standardLoad,
+        goodsName: this.state.goodsName,
+        company: this.state.company,
+        opendts: this.state.startTime,
+        opendte: this.state.endTime,
+      });
+
+      Taro.showToast({
+        title: data.msg,
+        icon: "success",
+        duration: 2000,
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      Taro.showToast({
+        title: toString(error),
+        icon: "fail",
+        duration: 2000,
+      });
+    }
   }
+
+  async onSubmit(event) {
+    const wid = Taro.getStorageSync("openid");
+    console.log(this.state, wid);
+    if (!wid) {
+      Taro.showToast({
+        title: "未登录",
+        icon: "success",
+        duration: 2000,
+      });
+    }
+    this.addPermit(wid);
+  }
+
   onReset(event) {
     this.setState({
-      value: "",
+      driverName: "",
+      licensePlate: "",
+      phone: "",
+      sex: "",
+      company: "",
+      standardLoad: undefined,
+      goodsName: "",
+
+      opendts: new Date().format("yyyy-MM-dd"),
+      opendte: new Date().format("yyyy-MM-dd"),
     });
   }
   // getPhoneNumber(e) {
@@ -75,7 +138,7 @@ export default class Index extends Component {
               type="text"
               placeholder="车牌号"
               required
-              border={false}
+              border={true}
               value={this.state.licensePlate}
               onChange={this.handleChange.bind(this, "licensePlate")}
             />
@@ -85,7 +148,7 @@ export default class Index extends Component {
               type="text"
               placeholder="货物名"
               required
-              border={false}
+              border={true}
               value={this.state.goodsName}
               onChange={this.handleChange.bind(this, "goodsName")}
             />
@@ -95,13 +158,13 @@ export default class Index extends Component {
               type="text"
               placeholder="姓名"
               required
-              border={false}
+              border={true}
               value={this.state.driverName}
               onChange={this.handleChange.bind(this, "driverName")}
             />
             <AtInput
               name="phone"
-              border={false}
+              border={true}
               title="手机号码"
               type="phone"
               placeholder="手机号码"
@@ -116,7 +179,7 @@ export default class Index extends Component {
               type="text"
               placeholder="所属单位"
               required
-              border={false}
+              border={true}
               value={this.state.company}
               onChange={this.handleChange.bind(this, "company")}
             />
@@ -126,7 +189,7 @@ export default class Index extends Component {
               type="number"
               placeholder="车辆标准载重"
               required
-              border={false}
+              border={true}
               value={this.state.standardLoad}
               onChange={this.handleChange.bind(this, "standardLoad")}
             >
@@ -165,14 +228,14 @@ export default class Index extends Component {
             </View>
           </View>
           <View className="btn-item">
-            <AtButton formType="submit" type="primary">
+            <Button formType="submit" type="primary">
               提交
-            </AtButton>
+            </Button>
           </View>
           <View className="btn-item">
-            <AtButton formType="reset" type="secondary">
+            <Button formType="reset" type="secondary">
               重置
-            </AtButton>
+            </Button>
           </View>
           {/* <Button
             openType="getPhoneNumber"
