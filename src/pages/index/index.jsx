@@ -73,19 +73,17 @@ export default class Index extends Component {
         opendts: this.state.startTime,
         opendte: this.state.endTime,
       });
-
       Taro.showToast({
         title: data.msg,
-        icon: "success",
+        icon: data.msg == "申请成功" ? "success" : "none",
         duration: 2000,
       });
-
       console.log(data);
     } catch (error) {
       console.log(error);
       Taro.showToast({
         title: toString(error),
-        icon: "fail",
+        icon: "none",
         duration: 2000,
       });
     }
