@@ -19,16 +19,18 @@ export default class Index extends Component {
       standardLoad: 25,
       goodsName: "小麦",
 
-      // startTime: new Date().format("yyyy-MM-dd"),
-      startTime: new Date(new Date().setDate(new Date().getDate() - 3)).format(
-        "yyyy-MM-dd"
-      ),
-      endTime: new Date(new Date().setDate(new Date().getDate() - 2)).format(
-        "yyyy-MM-dd"
-      ),
+      startTime: new Date().format("yyyy-MM-dd"),
+      endTime: new Date().format("yyyy-MM-dd"),
+      // startTime: new Date(new Date().setDate(new Date().getDate())).format(
+      //   "yyyy-MM-dd"
+      // ),
+      // endTime: new Date(new Date().setDate(new Date().getDate())).format(
+      //   "yyyy-MM-dd"
+      // ),
     };
 
     this.addPermit.bind(this);
+    this.checkParams.bind(this);
   }
 
   componentWillMount() {
@@ -89,15 +91,50 @@ export default class Index extends Component {
     }
   }
 
+  // 校验表单参数
+  checkParams() {
+    let temp = true;
+    if (
+      !new RegExp(
+        "[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}-[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}"
+      ).test(this.state.licensePlate)
+    ) {
+      temp = false;
+    }
+    if (!new RegExp("^1[3|4|5|7|8]d{9}$").test(this.state.phone)) {
+      temp = false;
+    }
+    if (
+      !(this.state.company && this.state.standardLoad && this.state.driverName)
+    ) {
+      temp = false;
+    }
+    if (this.state.startTime > this.state.endTime) {
+      temp = false;
+    }
+    if (temp) {
+      return true;
+    } else {
+      Taro.showToast({
+        title: "请正确填写信息",
+        icon: "none",
+        duration: 2000,
+      });
+    }
+  }
+
   async onSubmit(event) {
     const wid = Taro.getStorageSync("openid");
-    console.log(this.state, wid);
+    // console.log(this.state, wid);
     if (!wid) {
       Taro.showToast({
         title: "未登录",
-        icon: "success",
+        icon: "none",
         duration: 2000,
       });
+    }
+    if (!this.checkParams()) {
+      return;
     }
     this.addPermit(wid);
   }
@@ -134,7 +171,7 @@ export default class Index extends Component {
               name="licensePlate"
               title="车牌号"
               type="text"
-              placeholder="车牌号"
+              placeholder="豫A-00000"
               required
               border={true}
               value={this.state.licensePlate}
@@ -199,6 +236,7 @@ export default class Index extends Component {
             <View>
               <Picker
                 mode="date"
+                start={new Date().format("yyyy-MM-dd")}
                 onChange={this.onDateChange.bind(this, "startTime")}
               >
                 <AtList>
@@ -213,6 +251,7 @@ export default class Index extends Component {
             <View>
               <Picker
                 mode="date"
+                start={this.state.startTime}
                 onChange={this.onDateChange.bind(this, "endTime")}
               >
                 <AtList>
