@@ -6,6 +6,7 @@ import "./index.less";
 import { AtForm, AtInput, AtButton, AtList, AtListItem } from "taro-ui";
 
 import { addPermit } from "../../services/index";
+import { goodsList } from "../../utils/enum";
 
 export default class Index extends Component {
   constructor() {
@@ -17,7 +18,7 @@ export default class Index extends Component {
       sex: "",
       company: "河东运输",
       standardLoad: 25,
-      goodsName: "小麦",
+      goodsName: 0,
 
       startTime: new Date().format("yyyy-MM-dd"),
       endTime: new Date().format("yyyy-MM-dd"),
@@ -70,7 +71,7 @@ export default class Index extends Component {
         name: this.state.driverName,
         phone: this.state.phone,
         standardLoad: this.state.standardLoad,
-        goodsName: this.state.goodsName,
+        gid: goodsList[this.state.goodsName].value,
         company: this.state.company,
         opendts: this.state.startTime,
         opendte: this.state.endTime,
@@ -101,7 +102,7 @@ export default class Index extends Component {
     ) {
       temp = false;
     }
-    if (!new RegExp("^1[3|4|5|7|8]d{9}$").test(this.state.phone)) {
+    if (!new RegExp("^1[34578]{1}[0-9]{9}$").test(this.state.phone)) {
       temp = false;
     }
     if (
@@ -112,15 +113,14 @@ export default class Index extends Component {
     if (this.state.startTime > this.state.endTime) {
       temp = false;
     }
-    if (temp) {
-      return true;
-    } else {
+    if (!temp) {
       Taro.showToast({
         title: "请正确填写信息",
         icon: "none",
         duration: 2000,
       });
     }
+    return temp;
   }
 
   async onSubmit(event) {
@@ -147,7 +147,7 @@ export default class Index extends Component {
       sex: "",
       company: "",
       standardLoad: undefined,
-      goodsName: "",
+      goodsName: 0,
 
       opendts: new Date().format("yyyy-MM-dd"),
       opendte: new Date().format("yyyy-MM-dd"),
@@ -167,6 +167,23 @@ export default class Index extends Component {
         >
           <View>
             <Text className="title">基本信息</Text>
+            <View>
+              <Picker
+                mode="selector"
+                range={goodsList}
+                rangeKey="name"
+                value={this.state.goodsName}
+                onChange={this.onDateChange.bind(this, "goodsName")}
+              >
+                <AtList>
+                  <AtListItem
+                    hasBorder={false}
+                    title="请选择货物"
+                    extraText={goodsList[this.state.goodsName].name}
+                  />
+                </AtList>
+              </Picker>
+            </View>
             <AtInput
               name="licensePlate"
               title="车牌号"
@@ -176,16 +193,6 @@ export default class Index extends Component {
               border={true}
               value={this.state.licensePlate}
               onChange={this.handleChange.bind(this, "licensePlate")}
-            />
-            <AtInput
-              name="goodsName"
-              title="货物名"
-              type="text"
-              placeholder="货物名"
-              required
-              border={true}
-              value={this.state.goodsName}
-              onChange={this.handleChange.bind(this, "goodsName")}
             />
             <AtInput
               name="driverName"
