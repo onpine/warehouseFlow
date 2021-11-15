@@ -12,11 +12,11 @@ export default class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      driverName: "马*德",
-      licensePlate: "豫A-00111",
+      driverName: "地球喵喵教华夏地区总代理",
+      licensePlate: "豫A00111",
       phone: "13200001212",
       sex: "",
-      company: "河东运输",
+      company: "大壮农鲜运输",
       standardLoad: 25,
       goodsName: 0,
 
@@ -97,7 +97,7 @@ export default class Index extends Component {
     let temp = true;
     if (
       !new RegExp(
-        "[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}-[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}"
+        "[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}"
       ).test(this.state.licensePlate)
     ) {
       temp = false;
