@@ -13,7 +13,7 @@ export default class Index extends Component {
     super(...arguments);
     this.state = {
       driverName: "地球喵喵教华夏地区总代理",
-      licensePlate: "豫A00111",
+      licensePlate: "湘JS6668",
       phone: "13200001212",
       sex: "",
       company: "大壮农鲜运输",
