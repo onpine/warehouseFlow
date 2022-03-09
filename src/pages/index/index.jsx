@@ -211,7 +211,6 @@ export default class Index extends Component {
               type="phone"
               placeholder="手机号码"
               required
-              border={false}
               value={this.state.phone}
               onChange={this.handleChange.bind(this, "phone")}
             />
